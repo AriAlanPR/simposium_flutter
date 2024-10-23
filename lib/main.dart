@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:simposium/helpers/constants.dart';
 import 'package:simposium/helpers/persistent_data.dart';
 import 'package:simposium/views/configuracion.dart';
 import 'package:simposium/juego/tec_game.dart';
@@ -12,6 +13,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await PersistentData.init();
+  puntuaciones = PersistentData.preferences?.getStringList("puntajes") ?? puntuaciones;
+  sonido = PersistentData.preferences?.getBool("sonido") ?? sonido;
+  color = PersistentData.preferences?.getInt("color") ?? color;
+
+  print("obteniendo datos de memoria interna");
+  print("puntuaciones: $puntuaciones");
+  print("sonido: $sonido");
+  print("color: $color");
 
   //Hides status bar to give immersion in-game
   Flame.device.fullScreen();

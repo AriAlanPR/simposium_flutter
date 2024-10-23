@@ -1,11 +1,47 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:simposium/helpers/extensions/nullable_extension.dart';
 
 class Dialogo {
   Dialogo._();
+
+    static void info(BuildContext context, {
+    String title = "Mensaje",
+    String message = "",
+    String confirmation = "Ok",
+    void Function()? onDismiss,
+  }) {
+    title = "$title :";
+
+    if(confirmation == "Ok") {
+      confirmation = confirmation;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                onDismiss?.call();
+              },
+              child: Text(
+                confirmation,
+                style: const TextStyle(
+                  color: Colors.blue
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   static void showLoadingDialog(
     BuildContext context, {

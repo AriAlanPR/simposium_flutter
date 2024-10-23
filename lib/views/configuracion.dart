@@ -22,7 +22,9 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
   final _colores = [Colors.red, Colors.blue, Colors.yellow, Colors.green];
 
   void _actualizarColor(int index) {
-    _color = _colores[index].value;
+    setState(() {
+      _color = _colores[index].value;
+    });
   }
 
   @override
@@ -63,14 +65,18 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
                     children: [
                       const Easytext(text: "Sonido", size: 20),
                       Switch.adaptive(
-                        value: false, 
+                        value: _sonido ?? true, 
                         onChanged: (value) {
-                          _sonido = value;
+                          setState(() {
+                            _sonido = value;
+                          });
                         },
                       ),
                       const SizedBox(height: 20),
                       const Easytext(text: "Background", size: 20),
                       Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
                         children: [
                           GestureDetector(
                             onTap: () => _actualizarColor(0),
@@ -106,21 +112,25 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      
+                      const SizedBox(height: 20),                      
                       ElevatedButton(
                         onPressed: () async {
                           Dialogo.showLoadingDialog(context);
                           await PersistentData.preferences?.setStringList("puntuaciones", []);
 
                           if(context.mounted) {
-                            Navigator.of(context, rootNavigator: true).pop();
+                            //dismiss loading
+                            Navigator.of(context).pop();
                             //show confetti
                             Particles(
                               context: context,
                             ).showTriangle();
-                            //dismiss loading
+                            Dialogo.info(
+                              context,
+                              message: "Puntajes borrados",
+                            );
                           }
+
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green.shade800,
@@ -137,12 +147,17 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
                           await PersistentData.preferences?.setInt("color", _color ?? 0);
 
                           if(context.mounted) {
+                            //dismiss loading
                             Navigator.of(context).pop();
                             //show confetti
                             Particles(
                               context: context,
                             ).showCircle();
-                            //dismiss loading
+
+                            Dialogo.info(
+                              context,
+                              message: "Guardado",
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(
