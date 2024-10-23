@@ -52,12 +52,12 @@ class _StartMenuPageState extends State<MenuInicioPage> with ValidateMixin {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(),
+          const SizedBox(),
           Row( //NOTE - banner de titulo
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
-                image: AssetImage('assets/images/banner.png'),
+                image: const AssetImage('assets/images/banner.png'),
                 width: width * 0.67,
                 height: height * 0.1,
                 fit: BoxFit.fill,

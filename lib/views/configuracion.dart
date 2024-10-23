@@ -6,13 +6,24 @@ import 'package:simposium/helpers/widgets/dialog.dart';
 import 'package:simposium/helpers/widgets/easytext.dart';
 import 'package:simposium/helpers/widgets/particles.dart';
 
-class ConfiguracionPage extends StatelessWidget with ValidateMixin {
-  final String defaultName = "Guest";
-  final _nombreController = TextEditingController();
+class ConfiguracionPage extends StatefulWidget {
 
   ConfiguracionPage({
-    super.key,  
+    super.key,
   });
+
+  @override
+  State<ConfiguracionPage> createState() => _ConfiguracionPageState();
+}
+
+class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixin {
+  bool? _sonido;
+  int? _color;
+  final _colores = [Colors.red, Colors.blue, Colors.yellow, Colors.green];
+
+  void _actualizarColor(int index) {
+    _color = _colores[index].value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,44 +61,81 @@ class ConfiguracionPage extends StatelessWidget with ValidateMixin {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Easytext(text: "sonido", size: 20),
+                      const Easytext(text: "Sonido", size: 20),
                       Switch.adaptive(
                         value: false, 
                         onChanged: (value) {
-
+                          _sonido = value;
                         },
                       ),
                       const SizedBox(height: 20),
-                      const Easytext(text: "background", size: 20),
+                      const Easytext(text: "Background", size: 20),
                       Wrap(
                         children: [
-                          Container(
-                            color: Colors.red,
-                            width: 50,
-                            height: 50,
+                          GestureDetector(
+                            onTap: () => _actualizarColor(0),
+                            child: Container(
+                              color: _colores[0],
+                              width: 50,
+                              height: 50,
+                            ),
                           ),
-                          Container(
-                            color: Colors.blue,
-                            width: 50,
-                            height: 50,
+                          GestureDetector(
+                            onTap: () => _actualizarColor(1),
+                            child: Container(
+                              color: _colores[1],
+                              width: 50,
+                              height: 50,
+                            ),
                           ),
-                          Container(
-                            color: Colors.green,
-                            width: 50,
-                            height: 50,
+                          GestureDetector(
+                            onTap: () => _actualizarColor(2),
+                            child: Container(
+                              color: _colores[2],
+                              width: 50,
+                              height: 50,
+                            ),
                           ),
-                          Container(
-                            color: Colors.yellow,
-                            width: 50,
-                            height: 50,
+                          GestureDetector(
+                            onTap: () => _actualizarColor(3),
+                            child: Container(
+                              color: _colores[3],
+                              width: 50,
+                              height: 50,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
+                      
                       ElevatedButton(
                         onPressed: () async {
-                          Dialogo.showLoadingDialog(context, message: "Guardando");
-                          await PersistentData.save("nombre", _nombreController.text);
+                          Dialogo.showLoadingDialog(context);
+                          await PersistentData.preferences?.setStringList("puntuaciones", []);
+
+                          if(context.mounted) {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            //show confetti
+                            Particles(
+                              context: context,
+                            ).showTriangle();
+                            //dismiss loading
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade800,
+                        ),
+                        child: const Easytext(
+                          text: "Borrar puntajes",
+                          size: 15,
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          Dialogo.showLoadingDialog(context);
+                          await PersistentData.preferences?.setBool("sonido", _sonido ?? false);
+                          await PersistentData.preferences?.setInt("color", _color ?? 0);
+
                           if(context.mounted) {
                             Navigator.of(context).pop();
                             //show confetti
@@ -101,7 +149,7 @@ class ConfiguracionPage extends StatelessWidget with ValidateMixin {
                           backgroundColor: Colors.green.shade800,
                         ),
                         child: const Easytext(
-                          text: "Giuardar",
+                          text: "Guardar",
                           size: 15,
                         ),
                       ),

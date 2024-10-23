@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:simposium/helpers/persistent_data.dart';
 import 'package:simposium/views/configuracion.dart';
 import 'package:simposium/juego/tec_game.dart';
 import 'package:simposium/helpers/mixins/validate_mixin.dart';
 import 'package:simposium/views/menu_inicio.dart';
 import 'package:simposium/views/puntajes.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await PersistentData.init();
+
   //Hides status bar to give immersion in-game
   Flame.device.fullScreen();
   //locks device to portrait view
@@ -47,32 +51,29 @@ class _GameAppWrapperState extends State<GameAppWrapper> with ValidateMixin {
   
   Widget getCurrentPage(String route, {Map<String, dynamic>? arguments}) {
     switch (route) {
-      case '/scores':
+      case '/puntajes':
         return ScoreMenuPage();
-      case '/configuration':
+      case '/configuracion':
         return ConfiguracionPage();
-      case '/game':
+      case '/juego':
         return _juegoWidget();
       case '/':
       default: // Same as '/'
-        return MenuInicioPage();
+        return const MenuInicioPage();
     }
   }
 
   @override
   Widget build(BuildContext context) {    
     return MaterialApp(
-      home: Material(
-        child: Navigator(
-          onGenerateRoute: (settings) {
-            //NOTE: uncomment and use this in case is required to pass arguments dynamically
-            final args = settings.arguments as Map<String, dynamic>?;
-            Widget toPage = getCurrentPage(settings.name!, arguments: args);
-            
-            return MaterialPageRoute(builder: (context) => toPage);
-          },
-        ),
-      ),
+      onGenerateRoute: (settings) {
+        //NOTE: uncomment and use this in case is required to pass arguments dynamically
+        final args = settings.arguments as Map<String, dynamic>?;
+        Widget toPage = getCurrentPage(settings.name!, arguments: args);
+        
+        return MaterialPageRoute(builder: (context) => toPage);
+      },
+      home: getCurrentPage(currentRoute),
     );
   }
 }
