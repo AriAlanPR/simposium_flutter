@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 
 class Toast {
   Toast._();
@@ -14,7 +13,7 @@ class Toast {
         content: Text(message),
         duration: Duration(seconds: fast ? 1 : 2),
         action: SnackBarAction(
-          label: 'hide'.i18n(),
+          label: 'Ocultar',
           onPressed: scaffold.hideCurrentSnackBar,
         ),
       ),

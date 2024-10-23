@@ -1,97 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/game.dart';
+import 'package:simposium/views/configuracion.dart';
+import 'package:simposium/juego/tec_game.dart';
+import 'package:simposium/helpers/mixins/validate_mixin.dart';
+import 'package:simposium/views/menu_inicio.dart';
+import 'package:simposium/views/puntajes.dart';
 
 void main() {
-  final key = GlobalKey();
-  final inicio = Inicio(key: key);
-  runApp(inicio);
+  WidgetsFlutterBinding.ensureInitialized();
+  //Hides status bar to give immersion in-game
+  Flame.device.fullScreen();
+  //locks device to portrait view
+  Flame.device.setPortrait();
+
+  runApp(const GameAppWrapper());
 }
 
-class Inicio extends StatefulWidget {
-  const Inicio({
-    super.key,
-  });
+class GameAppWrapper extends StatefulWidget {
+  const GameAppWrapper({super.key});
 
   @override
-  State<Inicio> createState() => _InicioState();
+  State<GameAppWrapper> createState() => _GameAppWrapperState();
 }
 
-class _InicioState extends State<Inicio> {
+class _GameAppWrapperState extends State<GameAppWrapper> with ValidateMixin {
+  String currentRoute = '/';
 
-  //NOTE - esto es un metodo sobreescrito
+  Widget _juegoWidget() {
+    final game = isMobile ? TecGame() : TecGame.web();
+    final gameWidget = GameWidget(
+      game: game,
+    );
+
+    return isMobile
+      ? gameWidget
+      : Center(
+        child: FittedBox(
+            child: SizedBox(
+          width: defaultWidth,
+          height: defaultHeight,
+          child: gameWidget,
+        )),
+      );
+  }
+  
+  Widget getCurrentPage(String route, {Map<String, dynamic>? arguments}) {
+    switch (route) {
+      case '/scores':
+        return ScoreMenuPage();
+      case '/configuration':
+        return ConfiguracionPage();
+      case '/game':
+        return _juegoWidget();
+      case '/':
+      default: // Same as '/'
+        return MenuInicioPage();
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return MaterialApp(
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigo,
-        ),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                ),
-                const Text(
-                  'Simposium',
-                  style: TextStyle(
-                    fontSize: 60,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 32.0,
-                      vertical: 8.0,
-                    ),
-                    child: Text(
-                      'Jugar',
-                      style: TextStyle(
-                        fontSize: 40,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.2,
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Icon(
-                        Icons.sports_score_sharp,
-                        size: 60,
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35 ,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.settings,
-                        size: 60,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
+      home: Material(
+        child: Navigator(
+          onGenerateRoute: (settings) {
+            //NOTE: uncomment and use this in case is required to pass arguments dynamically
+            final args = settings.arguments as Map<String, dynamic>?;
+            Widget toPage = getCurrentPage(settings.name!, arguments: args);
+            
+            return MaterialPageRoute(builder: (context) => toPage);
+          },
         ),
       ),
     );

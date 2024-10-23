@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled_tec_game/game/components/enemy.dart';
-import 'package:untitled_tec_game/game/components/player.dart';
-import 'package:untitled_tec_game/game/tec_game.dart';
+import 'package:simposium/juego/components/enemy.dart';
+import 'package:simposium/juego/components/player.dart';
+import 'package:simposium/juego/tec_game.dart';
 
 //NOTES - By default the center of the world(in this case the screen) is at position (0,0)
 
