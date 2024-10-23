@@ -5,6 +5,7 @@ class Easytext extends StatelessWidget {
   final Color color;
   final double size;
   final bool bold;
+  final TextAlign? textAlign;
 
   const Easytext({
     super.key, 
@@ -12,12 +13,14 @@ class Easytext extends StatelessWidget {
     this.color = Colors.white, 
     this.size = 25, 
     this.bold = false,
+    this.textAlign,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: textAlign,
       style: TextStyle(
         fontSize: size,
         color: color,

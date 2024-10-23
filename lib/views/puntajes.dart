@@ -42,7 +42,47 @@ class ScoreMenuPage extends StatelessWidget with ValidateMixin {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 20),
-                ...scores.map((score) => Easytext(text: score.toString())),
+                Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    const TableRow(
+                      children: [
+                        Easytext(
+                          text: "Jugador", 
+                          size: 20,
+                          bold: true,
+                          textAlign: TextAlign.center,
+                        ),
+                        Easytext(
+                          text: "Puntaje", 
+                          size: 20,
+                          bold: true,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    const TableRow(
+                      children: [
+                        SizedBox(height: 20,),
+                        SizedBox(height: 20,),
+                      ],
+                    ),
+                    ...scores.map((score) => TableRow(
+                      children: [
+                        const Easytext(
+                          text: "Invitado",
+                          size: 15,
+                          textAlign: TextAlign.center,
+                        ),
+                        Easytext(
+                          text: score.toString(),
+                          size: 15,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )),
+                  ],
+                ),
                 const SizedBox(height: 80),
               ],
             ),
