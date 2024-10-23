@@ -50,25 +50,38 @@ class ConfiguracionPage extends StatelessWidget with ValidateMixin {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Easytext(text: "nombre", size: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                        child: TextFormField(
-                          style: const TextStyle(
-                            color: Colors.white,
+                      const Easytext(text: "sonido", size: 20),
+                      Switch.adaptive(
+                        value: false, 
+                        onChanged: (value) {
+
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      const Easytext(text: "background", size: 20),
+                      Wrap(
+                        children: [
+                          Container(
+                            color: Colors.red,
+                            width: 50,
+                            height: 50,
                           ),
-                          decoration: InputDecoration(
-                            fillColor: Colors.green.shade900.withOpacity(0.2),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
+                          Container(
+                            color: Colors.blue,
+                            width: 50,
+                            height: 50,
                           ),
-                          onTapOutside: (_) {
-                            FocusScope.of(context).unfocus();
-                          },
-                        ),
+                          Container(
+                            color: Colors.green,
+                            width: 50,
+                            height: 50,
+                          ),
+                          Container(
+                            color: Colors.yellow,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
@@ -76,12 +89,12 @@ class ConfiguracionPage extends StatelessWidget with ValidateMixin {
                           Dialogo.showLoadingDialog(context, message: "Guardando");
                           await PersistentData.save("nombre", _nombreController.text);
                           if(context.mounted) {
+                            Navigator.of(context).pop();
                             //show confetti
                             Particles(
                               context: context,
                             ).showCircle();
                             //dismiss loading
-                            Navigator.of(context).pop();
                           }
                         },
                         style: ElevatedButton.styleFrom(
