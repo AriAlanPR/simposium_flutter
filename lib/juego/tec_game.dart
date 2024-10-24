@@ -1,11 +1,12 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:simposium/helpers/app_colors.dart';
 import 'package:simposium/helpers/constants.dart';
 import 'package:simposium/juego/components/first_world.dart';
 
-class TecGame extends FlameGame {
+class TecGame extends FlameGame with HorizontalDragDetector {
   final Color bgColor;
   TecGame({
     super.children,

@@ -1,8 +1,7 @@
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-class Character extends CircleComponent with DragCallbacks {
+class Character extends CircleComponent {
   Character({
     required super.position,
     required double radius,
@@ -23,11 +22,4 @@ class Character extends CircleComponent with DragCallbacks {
     position.y = nuevoY.clamp(0, 300);
 
   }
-
-  // @override
-  //  void onDragStart(DragStartEvent event) {
-  //    // Do something in response to a drag event
-  //    position.x = event.canvasPosition.x;
-  //    position.y = event.canvasPosition.y;
-  //  }
 }

@@ -51,11 +51,12 @@ class _GameAppWrapperState extends State<GameAppWrapper> with ValidateMixin {
       ? gameWidget
       : Center(
         child: FittedBox(
-            child: SizedBox(
-          width: defaultWidth,
-          height: defaultHeight,
-          child: gameWidget,
-        )),
+          child: SizedBox(
+            width: defaultWidth,
+            height: defaultHeight,
+            child: gameWidget,
+          ),
+        ),
       );
   }
   
