@@ -15,14 +15,7 @@ class _StartMenuPageState extends State<MenuInicioPage> with ValidateMixin {
   late double height;
   final double defaultButtonOpacity = 0.9;
 
-  @override
-
-  void initState() {
-    super.initState();
-  }
-
-
-  void onStart() {
+  void _onStart() {
     Particles(
       context: context,
       number: 30,
@@ -65,7 +58,7 @@ class _StartMenuPageState extends State<MenuInicioPage> with ValidateMixin {
             ],
           ),
           ElevatedButton( //NOTE - jugar
-            onPressed: onStart,
+            onPressed: _onStart,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               elevation: 5,

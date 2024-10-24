@@ -7,7 +7,7 @@ import 'package:simposium/juego/tec_game.dart';
 
 //NOTES - By default the center of the world(in this case the screen) is at position (0,0)
 
-class FirstWorld extends World with HasGameRef<TecGame>{
+class FirstWorld extends World with HasGameRef<TecGame> {
 
   @override
   FutureOr<void> onLoad() {
@@ -21,6 +21,7 @@ class FirstWorld extends World with HasGameRef<TecGame>{
     _addCharacter(
       color: Colors.blue,
       isPlayer: false,
+      x: - 30,
     );
   }
 
@@ -29,13 +30,13 @@ class FirstWorld extends World with HasGameRef<TecGame>{
     if (isPlayer) {
       add(Player(
         position: Vector2(x, y),
-        radius: 50,
+        radius: 20,
         color: color ?? Colors.red,
       ));
     } else {
       add(Enemy(
         position: Vector2(x, y),
-        radius: 20,
+        radius: 30,
         color: color ?? Colors.blue,
       ));
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:simposium/helpers/app_colors.dart';
 import 'package:simposium/helpers/constants.dart';
 import 'package:simposium/helpers/persistent_data.dart';
 import 'package:simposium/views/configuracion.dart';
@@ -58,7 +59,7 @@ class _GameAppWrapperState extends State<GameAppWrapper> with ValidateMixin {
       );
   }
   
-  Widget getCurrentPage(String route, {Map<String, dynamic>? arguments}) {
+  Widget _getCurrentPage(String route, {Map<String, dynamic>? arguments}) {
     switch (route) {
       case '/puntajes':
         return ScoreMenuPage();
@@ -75,14 +76,19 @@ class _GameAppWrapperState extends State<GameAppWrapper> with ValidateMixin {
   @override
   Widget build(BuildContext context) {    
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: AppColors.seed,
+      ),
       onGenerateRoute: (settings) {
         //NOTE: uncomment and use this in case is required to pass arguments dynamically
-        final args = settings.arguments as Map<String, dynamic>?;
-        Widget toPage = getCurrentPage(settings.name!, arguments: args);
+        final parameters = settings.arguments as Map<String, dynamic>?;
+
+        Widget toPage = _getCurrentPage(settings.name!, arguments: parameters);
         
         return MaterialPageRoute(builder: (context) => toPage);
       },
-      home: getCurrentPage(currentRoute),
+      home: _getCurrentPage(currentRoute),
     );
   }
 }
