@@ -7,7 +7,7 @@ import 'package:simposium/helpers/app_colors.dart';
 import 'package:simposium/helpers/constants.dart';
 import 'package:simposium/juego/components/first_world.dart';
 
-class TecGame extends FlameGame<FirstWorld> with HorizontalDragDetector, VerticalDragDetector, KeyboardEvents {
+class TecGame extends FlameGame<FirstWorld> with HorizontalDragDetector, VerticalDragDetector, KeyboardEvents, HasCollisionDetection {
   final Color bgColor;
   TecGame({
     super.children,
@@ -44,7 +44,7 @@ class TecGame extends FlameGame<FirstWorld> with HorizontalDragDetector, Vertica
 
   @override
   KeyEventResult onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    final double distancia = 50;
+    const distancia = 50.0;
 
     if(event.logicalKey == LogicalKeyboardKey.arrowLeft) {
       world.player.mover(deltaX: -distancia);
