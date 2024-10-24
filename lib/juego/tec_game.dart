@@ -9,6 +9,7 @@ import 'package:simposium/juego/components/first_world.dart';
 
 class TecGame extends FlameGame<FirstWorld> with HorizontalDragDetector, VerticalDragDetector, KeyboardEvents, HasCollisionDetection {
   final Color bgColor;
+  
   TecGame({
     super.children,
     this.bgColor = AppColors.navy,

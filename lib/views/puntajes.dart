@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:simposium/helpers/app_colors.dart';
 import 'package:simposium/helpers/mixins/validate_mixin.dart';
+import 'package:simposium/helpers/persistent_data.dart';
 import 'package:simposium/helpers/widgets/easytext.dart';
 
 class ScoreMenuPage extends StatelessWidget with ValidateMixin {
   final List<int> scores;
   ScoreMenuPage({
     super.key,
-    this.scores = const [0,0,0,0,0,0,0,0,0,0],
-  });
+  }): scores = PersistentData.preferences?.getStringList("puntajes")?.map((e) => int.parse(e)).toList() ?? const [0,0,0,0,0,0,0,0,0,0];
 
   //TODO - keep latest 10 scores
   @override

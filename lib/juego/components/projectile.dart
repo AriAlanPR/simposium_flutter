@@ -3,6 +3,8 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
+import 'package:simposium/helpers/widgets/dialog.dart';
+import 'package:simposium/juego/components/character.dart';
 import 'package:simposium/juego/tec_game.dart';
 
 class Projectile extends RectangleComponent with HasGameRef<TecGame>, CollisionCallbacks {
@@ -21,7 +23,7 @@ class Projectile extends RectangleComponent with HasGameRef<TecGame>, CollisionC
   double get minX => -(gameRef.size.x / 2) + size.x / 2;
   double get maxX => (gameRef.size.x / 2) - size.x / 2;
   double get minY => -(gameRef.size.y / 2) + size.y / 2;
-  double get maxY => (gameRef.size.y / 2) - size.y / 2;
+  double get maxY => ((gameRef.size.y / 2) - size.y / 2) + size.y + 10;
 
   @override
   FutureOr<void> onLoad() {
@@ -37,15 +39,24 @@ class Projectile extends RectangleComponent with HasGameRef<TecGame>, CollisionC
       EffectController(duration: 2),
     );
 
+    add(RectangleHitbox());
     add(traslacion);
     add(rotacion);
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    if(other is ScreenHitbox) {
-      gameRef.remove(this);
+    if(other is Character) {
+      other.removeFromParent();
+      Dialogo.info(
+        gameRef.buildContext!, 
+        title: "Game Over", 
+        message: "Perdiste, vuelve a intentarlo",
+        onDismiss: () {
+          Navigator.of(gameRef.buildContext!).pop();
+        }
+      );
     }
+    super.onCollision(intersectionPoints, other);
   }
 }

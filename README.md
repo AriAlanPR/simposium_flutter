@@ -1,17 +1,32 @@
 # simposium
 
-A new Flutter project.
+## Paquetes
 
-## Getting Started
+### agregar repositorios:
+#### configuracion para splash screen
+`flutter pub add flutter_native_splash`
 
-This project is a starting point for a Flutter application.
+```
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/splash.png
+```
+- Instalacion:
+`dart run flutter_native_splash:create`
+- [ ] [documentacion](https://pub.dev/packages/flutter_native_splash)
 
-A few resources to get you started if this is your first Flutter project:
+#### configuracion para icono de lanzamiento
+`flutter pub add flutter_icons`
+```
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/launcher.png"
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Instalacion:
+`dart run flutter_launcher_icons`
+- [ ] [documentacion](https://pub.dev/packages/flutter_launcher_icons)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# simposium_flutter
+### Fuentes de información
+- [ ] [más sobre flame](https://docs.flame-engine.org)

@@ -115,9 +115,8 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
                     ElevatedButton(
                       onPressed: () async {
                         Dialogo.showLoadingDialog(context);
-                        await PersistentData.preferences?.setStringList("puntuaciones", []);
-                        await Future.delayed(Duration(seconds: 2),);
-                
+                        await PersistentData.preferences?.setStringList("puntuaciones", ["0","0","0","0","0","0","0","0","0","0"]);
+                        await Future.delayed(const Duration(seconds: 2),);
                         if(context.mounted) {
                           //dismiss loading
                           Navigator.of(context).pop();

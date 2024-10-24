@@ -33,7 +33,7 @@ class FirstWorld extends World with HasGameRef<TecGame> {
       color: Colors.red,
     );
 
-    add(player);
+    add(player);    
   }
   
   @override
