@@ -1,16 +1,15 @@
 import 'dart:async';
-import 'dart:math';
-
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:simposium/juego/tec_game.dart';
 
-class Projectile extends RectangleComponent with HasGameRef<TecGame> {
+class Projectile extends RectangleComponent with HasGameRef<TecGame>, CollisionCallbacks {
   Projectile({
     required super.position,
     required double lados,
-    Color color = Colors.black,
+    Color color = Colors.white,
   }) : super(
           anchor: Anchor.center,
           size: Vector2(lados, lados),
@@ -43,12 +42,10 @@ class Projectile extends RectangleComponent with HasGameRef<TecGame> {
   }
 
   @override
-  void update(double dt) {
-    super.update(dt);
-
-    // double nuevoY = position.y + (dt * 200);
-    // position.y = nuevoY.clamp(0, 300);
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    if(other is ScreenHitbox) {
+      gameRef.remove(this);
+    }
   }
-
-  
 }
