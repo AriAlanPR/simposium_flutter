@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -27,8 +29,14 @@ class TecGame extends FlameGame<FirstWorld> with HorizontalDragDetector, Vertica
         ));
 
   @override
+  FutureOr<void> onLoad() {
+    // TODO: implement onLoad
+    return super.onLoad();
+  }
+
+  @override
   Color backgroundColor() {
-    return bgColor;
+    return Color(colorBackground);
   }
 
   @override

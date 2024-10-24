@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simposium/helpers/constants.dart';
 import 'package:simposium/helpers/mixins/validate_mixin.dart';
 import 'package:simposium/helpers/app_colors.dart';
 import 'package:simposium/helpers/persistent_data.dart';
@@ -116,6 +117,7 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
                       onPressed: () async {
                         Dialogo.showLoadingDialog(context);
                         await PersistentData.preferences?.setStringList("puntuaciones", ["0","0","0","0","0","0","0","0","0","0"]);
+                        puntuaciones = ["0","0","0","0","0","0","0","0","0","0"];
                         await Future.delayed(const Duration(seconds: 2),);
                         if(context.mounted) {
                           //dismiss loading
@@ -142,8 +144,14 @@ class _ConfiguracionPageState extends State<ConfiguracionPage> with ValidateMixi
                     ElevatedButton(
                       onPressed: () async {
                         Dialogo.showLoadingDialog(context);
-                        await PersistentData.preferences?.setBool("sonido", _sonido ?? false);
-                        await PersistentData.preferences?.setInt("color", _color ?? 0);
+                        if(_sonido != null){
+                          await PersistentData.preferences?.setBool("sonido", _sonido!);
+                          sonido = _sonido!;
+                        }
+                        if(_color != null) {
+                          await PersistentData.preferences?.setInt("color", _color!);
+                          colorBackground = _color!;
+                        }
                 
                         if(context.mounted) {
                           //dismiss loading

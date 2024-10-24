@@ -14,14 +14,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await PersistentData.init();
-  puntuaciones = PersistentData.preferences?.getStringList("puntajes") ?? puntuaciones;
+  puntuaciones = PersistentData.preferences?.getStringList("puntuaciones") ?? puntuaciones;
   sonido = PersistentData.preferences?.getBool("sonido") ?? sonido;
-  color = PersistentData.preferences?.getInt("color") ?? color;
+  colorBackground = PersistentData.preferences?.getInt("color") ?? colorBackground;
 
   print("obteniendo datos de memoria interna");
   print("puntuaciones: $puntuaciones");
   print("sonido: $sonido");
-  print("color: $color");
+  print("color: $colorBackground");
 
   //Hides status bar to give immersion in-game
   Flame.device.fullScreen();
